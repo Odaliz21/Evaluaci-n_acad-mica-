@@ -1,0 +1,31 @@
+create database universidad;
+
+use universidad;
+
+CREATE TABLE [dbo].[estudiante] (
+    [StudentID]      INT           IDENTITY (1, 1) NOT NULL,
+    [cod_est]       NVARCHAR (4) NOT NULL,
+    [nomb_est]      NVARCHAR (40) NULL,
+    PRIMARY KEY CLUSTERED ([StudentID] ASC)
+);
+
+CREATE TABLE [dbo].[asignatura] (
+    [CourseID] INT           IDENTITY (1, 1) NOT NULL,
+    [cod_asignatura] NVARCHAR (4) NOT NULL,
+    [nomb_asignatura]    NVARCHAR (40) NULL,
+    [creditos]  INT           NULL,
+    PRIMARY KEY CLUSTERED ([CourseID] ASC)
+);
+
+CREATE TABLE [dbo].[matricula] (
+    [EnrollmentID] INT IDENTITY (1, 1) NOT NULL,
+    [periodo]       NVARCHAR (6) NULL,
+    [promedio] 	   INT   NULL,
+    [CourseID]     INT NOT NULL,
+    [StudentID]    INT NOT NULL,
+    PRIMARY KEY CLUSTERED ([EnrollmentID] ASC),
+    CONSTRAINT [FK_dbo.Enrollment_dbo.Asignatura_CourseID] FOREIGN KEY ([CourseID]) 
+        REFERENCES [dbo].[Asignatura] ([CourseID]) ON DELETE CASCADE,
+    CONSTRAINT [FK_dbo.matricula_dbo.estudiante_StudentID] FOREIGN KEY ([StudentID]) 
+        REFERENCES [dbo].[estudiante] ([StudentID]) ON DELETE CASCADE
+);
